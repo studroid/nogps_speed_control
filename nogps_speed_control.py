@@ -186,7 +186,7 @@ while totalDrivingTime < GOAL_DRIVING_TIME:
     execStartTime = time.time()
     set_attitude(pitch_angle = pitch, roll_angle = roll, duration = 0.05)
     distance = dd.getMovedDistance()
-    execTime = execStartTime - time.time()
+    execTime = time.time() - execStartTime
 
     # Unit: m/s
     currentVelocityX = distance['x']/execTime
