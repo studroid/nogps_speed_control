@@ -43,8 +43,8 @@ def arm_and_takeoff_nogps(aTargetAltitude):
     """
     
     ##### CONSTANTS #####
-    DEFAULT_TAKEOFF_THRUST = 0.65
-    SMOOTH_TAKEOFF_THRUST = 0.55
+    DEFAULT_TAKEOFF_THRUST = 0.7
+    SMOOTH_TAKEOFF_THRUST = 0.6
     
     print "Basic pre-arm checks"
     # Don't let the user try to arm until autopilot is ready
