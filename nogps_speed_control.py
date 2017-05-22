@@ -147,7 +147,7 @@ Find the line to follow and change the attributes of the vehicle appropriately b
 #GOAL_Y = 0;
 
 # Unit: m/s
-GOAL_X_VELOCITY = 1
+GOAL_X_VELOCITY = 0
 GOAL_Y_VELOCITY = 1
 
 currentVelocityX = 0
@@ -179,9 +179,12 @@ while totalDrivingTime < GOAL_DRIVING_TIME:
         roll -= 0.2
 
     if currentVelocityY < GOAL_Y_VELOCITY:
-        pitch += 0.2
-    else:
+        # Note that pitch should be decreased to make the drone go forward
         pitch -= 0.2
+    else:
+        pitch += 0.2
+
+    # TODO: limit the maximum of pitch and roll
 
     execStartTime = time.time()
     set_attitude(pitch_angle = pitch, roll_angle = roll, duration = 0.05)
@@ -195,6 +198,8 @@ while totalDrivingTime < GOAL_DRIVING_TIME:
     # TODO: 1.6:distance = altitude:currentDistance
 
     totalDrivingTime += execTime
+
+    print "totalDrivingTime: ", totalDrivingTime
 
 
 print("!!!!!!!!!!! MOVING END !!!!!!!!!")
