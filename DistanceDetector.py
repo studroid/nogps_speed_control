@@ -97,6 +97,12 @@ class DistanceDetector:
         
         # BFMatcher with default params
         bf = cv2.BFMatcher()
+        
+        clusters = np.array([des1])
+        bf.add(clusters)
+
+        # Train: Does nothing for BruteForceMatcher though.
+        bf.train()
         matches = bf.knnMatch(des1,des2, k=2)
         
         # Apply ratio test
@@ -123,6 +129,8 @@ class DistanceDetector:
         
         self.previousImage = self.currentImage
         #calculate median of list
+        if np.isnan(np.median(np.array(list_x))) or np.isnan(np.median(np.array(list_y))):
+            return 'nan'
         return {'x':np.median(np.array(list_x))*0.011,'y':np.median(np.array(list_y))*0.011}
 
         #Create skeleton

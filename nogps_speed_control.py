@@ -148,7 +148,7 @@ Find the line to follow and change the attributes of the vehicle appropriately b
 
 # Unit: m/s
 GOAL_X_VELOCITY = 0
-GOAL_Y_VELOCITY = 1
+GOAL_Y_VELOCITY = 5
 
 currentVelocityX = 0
 currentVelocityY = 0
@@ -157,7 +157,7 @@ currentVelocityY = 0
 #totalX = 0;
 #totalY = 0;
 
-GOAL_DRIVING_TIME = 5
+GOAL_DRIVING_TIME = 8
 totalDrivingTime = 0
 
 # Current pitch and roll angle
@@ -184,11 +184,21 @@ while totalDrivingTime < GOAL_DRIVING_TIME:
     else:
         pitch += 0.2
 
-    # TODO: limit the maximum of pitch and roll
+    # Limit the maximum of pitch and roll
+    if pitch > 15:
+        pitch = 15
+    if roll > 15:
+        roll = 15
+
+    print "pitch: ", pitch, " roll: ", roll
+    print "velocityY: ", currentVelocityY, " velocityX: ", currentVelocityX
 
     execStartTime = time.time()
     set_attitude(pitch_angle = pitch, roll_angle = roll, duration = 0.05)
     distance = dd.getMovedDistance()
+    while distance == 'nan':
+        distance = dd.getMovedDistance()
+
     execTime = time.time() - execStartTime
 
     # Unit: m/s
