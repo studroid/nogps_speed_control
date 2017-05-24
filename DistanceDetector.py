@@ -95,9 +95,20 @@ class DistanceDetector:
         kp1, des1 = self.sift.detectAndCompute(img1,None)
         kp2, des2 = self.sift.detectAndCompute(img2,None)
         
+        #detecting descriptors failed
+        if des1 is None or des2 is None:
+            return {'x':'nan','y':'nan'}
+        
         # BFMatcher with default params
         bf = cv2.BFMatcher()
+        
+        clusters = np.array([des1])
+        bf.add(clusters)
+        # Train: Does nothing for BruteForceMatcher though.
+        bf.train()
+        
         matches = bf.knnMatch(des1,des2, k=2)
+        
         
         # Apply ratio test
         good = []
@@ -123,6 +134,8 @@ class DistanceDetector:
         
         self.previousImage = self.currentImage
         #calculate median of list
+        if not list_x or not list_y:
+            return {'x':'nan','y':'nan'}
         return {'x':np.median(np.array(list_x))*0.011,'y':np.median(np.array(list_y))*0.011}
 
         #Create skeleton
